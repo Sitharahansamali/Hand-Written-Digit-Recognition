@@ -1,0 +1,15 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+# Jupyter
+.ipynb_checkpoints
+
+# Virtual environments
+.venv/
+
+# Model files
+*.joblib
+
+# VSCode
+.vscode/
