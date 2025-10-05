@@ -1,33 +1,85 @@
 Hand Written Digit Recognition
+Thank you for visiting this project. Below are clear instructions on how to run the code, what to expect, and how to use the saved model.
 
-This repository contains a Jupyter notebook (`Digit_Recognition.ipynb`) and a converted Python script (`digit_recognition.py`) that trains simple SVM and KNN pipelines on sklearn's digits dataset and saves the best model.
+How to Run
 
-How to run locally
+1. Clone this repository:
 
-1. Create a virtual environment and install deps:
+```bash
+git clone https://github.com/<your-username>/handwritten-digit-recognition.git
+cd handwritten-digit-recognition
+```
+
+2. Create a virtual environment and install dependencies:
 
 ```bash
 python -m venv .venv
-source .venv/bin/activate   # or `.venv\Scripts\activate` on Windows
+# macOS / Linux
+source .venv/bin/activate
+# Windows (PowerShell / Command Prompt)
+.venv\\Scripts\\activate
 pip install -r requirements.txt
 ```
 
-2. Run the training script:
+3. Run the script:
 
 ```bash
 python digit_recognition.py
 ```
 
-This will train both models, print accuracy and classification reports, optionally show confusion matrix plots, and save the best pipeline as a `.joblib` file.
+What the script does
 
-Git / GitHub
+- Load and visualize the digits dataset (sklearn.datasets.load_digits)
+- Split the dataset into training and test sets
+- Train SVM and KNN classifiers
+- Print classification reports and accuracy
+- Show confusion matrices (if a display is available)
+- Display some random predictions
+- Save the best-performing model as a `.joblib` file
 
-I initialized a local git repository and created an initial commit for you. To push to GitHub, add a remote and push:
+Results
 
-```bash
-git remote add origin <your-github-repo-url>
-git branch -M main
-git push -u origin main
+Both models typically perform at ~98% accuracy on the test set. The script compares SVM and KNN and saves the best model as `digits_best_<model>_pipeline.joblib`.
+
+Example output:
+
+```
+SVM accuracy: 0.981
+KNN accuracy: 0.978
+
+Saved best model as: digits_best_svm_pipeline.joblib
 ```
 
-If you'd like, provide the remote repo URL and I can add it and push for you (or I can show the exact commands to run).
+Visualizations
+
+- Confusion Matrix for SVM
+- Confusion Matrix for KNN
+- Random Test Predictions with True Label, SVM Prediction, and KNN Prediction
+
+Using the saved model
+
+You can reload the saved pipeline and use it for predictions:
+
+```python
+import joblib
+import numpy as np
+
+# Load trained pipeline
+model = joblib.load("digits_best_svm_pipeline.joblib")
+
+# Example: predict one digit from the test set
+# (If you want to reproduce this exactly you can load X from sklearn.datasets)
+from sklearn.datasets import load_digits
+X, y = load_digits(return_X_y=True)
+sample = X[0].reshape(1, -1)  # reshape to (1,64)
+print("Predicted:", model.predict(sample))
+```
+
+Notes
+
+- Model files (`*.joblib`) are ignored by `.gitignore` to avoid committing large binary files.
+- If running on a headless server, the script will skip plotting the figures and still save the model.
+
+Author
+
+Sithara Hansamali
